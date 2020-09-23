@@ -8,7 +8,8 @@ const centers = [
 ];
 // const centers = [{ x: 400, y: 400 }];
 
-const sizesSide = [2, 4, 6, 8, 16, 32, 64, 128, 256];
+// const sizesSide = [2, 4, 6, 8, 16, 32, 64, 128, 256];
+const sizesSide = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 388];
 
 // const sizesSide = [100];
 

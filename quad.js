@@ -11,6 +11,7 @@ class Quad {
 
     this.currTime = 0;
     this.intervals = [];
+    this.speed = Math.random() * (1200 - 500) + 500;
 
     this.generateIntervals();
   }
@@ -47,13 +48,16 @@ class Quad {
       line(this.rightX - this.sizeSide * (start - 2), this.bottomY, this.leftX + this.sizeSide * (3 - end), this.bottomY);
     } else if (start >= 3 && start <= 4 && end >= 3 && end <= 4) {
       line(this.leftX, this.bottomY - this.sizeSide * (start - 3), this.leftX, this.topY + this.sizeSide * (4 - end));
+    } else if (start >= 3 && start <= 4 && end >= 0 && end <= 1) {
+      this.drawLineFromTo(start, 4);
+      this.drawLineFromTo(0, end);
     }
   }
 
   draw() {
     stroke(0);
 
-    this.currTime += deltaTime / 1000;
+    this.currTime += deltaTime / this.speed;
 
     // console.log(this.currTime);
 
