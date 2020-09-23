@@ -24,7 +24,7 @@ function preload() {
 function setup() {
   let sizesSide = [];
 
-  for (let i = 25; i < 399; i += 20) sizesSide.push(i);
+  for (let i = 25; i < 399; i += 10) sizesSide.push(i);
 
   createCanvas(800, 800);
 
@@ -42,7 +42,7 @@ function draw() {
 
   noFill();
 
-  for (let i = 0; i < drawIteration; i++) quads[i].draw();
+  for (let i = 0; i < drawIteration && i < quads.length; i++) quads[i].draw();
 }
 
 function keyPressed() {

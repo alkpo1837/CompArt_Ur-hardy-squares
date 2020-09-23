@@ -1,3 +1,5 @@
+const FADE_IN_DURATION = 250;
+
 class Quad {
   constructor(centerX, centerY, sizeSide) {
     this.centerX = centerX;
@@ -12,7 +14,9 @@ class Quad {
     this.currTime = 0;
     this.intervals = [];
     this.speed = Math.random() * (1500 - 1000) + 1000;
-    this.strokeWeight = Math.random() + 1;
+    this.strokeWeight = Math.random() * 0.5 + 1;
+    this.alpha = 0;
+    this.isFadingIn = false;
 
     this.generateIntervals();
   }
@@ -30,8 +34,6 @@ class Quad {
       this.intervals.push({ start: startInterval, end: endInterval });
       lastInterval = endInterval;
     }
-
-    // this.intervals.forEach((interval) => console.log(interval));
   }
 
   drawLineFromTo(start, end) {
@@ -55,7 +57,10 @@ class Quad {
   }
 
   draw() {
-    stroke(13);
+    if (this.alpha == 0 && this.isFadingIn == false) this.isFadingIn = true;
+
+    console.log(this.alpha);
+    stroke(13, 13, 13, this.alpha);
     strokeWeight(this.strokeWeight);
 
     this.currTime += deltaTime / this.speed;
@@ -65,6 +70,12 @@ class Quad {
       const end = (interval.end + this.currTime) % 4;
       this.drawLineFromTo(start, end);
     });
+
+    if (this.isFadingIn) {
+      this.alpha = Math.min(this.alpha + deltaTime / 2, 255);
+
+      if (this.alpha == 255) this.isFadingIn = false;
+    }
   }
 }
 
