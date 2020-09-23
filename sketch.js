@@ -1,11 +1,15 @@
 import { Quad } from './quad.js';
 
-const centers = [
-  { x: 200, y: 200 },
-  { x: 600, y: 200 },
-  { x: 200, y: 600 },
-  { x: 600, y: 600 },
-];
+// const centers = [
+//   { x: 200, y: 200 },
+//   { x: 600, y: 200 },
+//   { x: 200, y: 600 },
+//   { x: 600, y: 600 },
+// ];
+
+const BORDERS = 192;
+const NBR_SQUARES = 10;
+
 // const centers = [{ x: 400, y: 400 }];
 
 // const sizesSide = [2, 4, 6, 8, 16, 32, 64, 128, 256];
@@ -13,8 +17,9 @@ const centers = [
 
 // const sizesSide = [100];
 
+let centers = [];
 let quads = [];
-let drawIteration = 4;
+let drawIteration = NBR_SQUARES;
 let song;
 
 function preload() {
@@ -22,15 +27,17 @@ function preload() {
 }
 
 function setup() {
+  createCanvas(800, 800);
+
   let sizesSide = [];
 
   for (let i = 25; i < 399; i += 10) sizesSide.push(i);
-
-  createCanvas(800, 800);
+  for (let i = 0; i < NBR_SQUARES; i++)
+    centers.push({ x: Math.random() * (width - BORDERS * 2) + BORDERS, y: Math.random() * (height - BORDERS * 2) + BORDERS });
 
   sizesSide.forEach((sizeSide) => {
     centers.forEach((center) => {
-      quads.push(new Quad(center.x, center.y, sizeSide));
+      quads.push(new Quad(center.x, center.y, sizeSide + Math.random() * 10));
     });
   });
 
@@ -38,7 +45,7 @@ function setup() {
 }
 
 function draw() {
-  background(240);
+  background(255);
 
   noFill();
 
@@ -47,7 +54,7 @@ function draw() {
 
 function keyPressed() {
   if (key == 'a') {
-    drawIteration += 4;
+    drawIteration += NBR_SQUARES;
   }
 }
 

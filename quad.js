@@ -1,5 +1,7 @@
 const FADE_IN_DURATION = 250;
 
+const COLORS = ['#E63946', '#F6BD60', '#A8DADC', '#457B9D', '#1D3557'];
+
 class Quad {
   constructor(centerX, centerY, sizeSide) {
     this.centerX = centerX;
@@ -14,7 +16,9 @@ class Quad {
     this.currTime = 0;
     this.intervals = [];
     this.speed = Math.random() * (1500 - 1000) + 1000;
-    this.strokeWeight = Math.random() * 0.5 + 1;
+    this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+
+    this.strokeWeight = 2;
     this.alpha = 0;
     this.isFadingIn = false;
 
@@ -59,8 +63,10 @@ class Quad {
   draw() {
     if (this.alpha == 0 && this.isFadingIn == false) this.isFadingIn = true;
 
-    console.log(this.alpha);
-    stroke(13, 13, 13, this.alpha);
+    let colorAlpha = color(this.color);
+    colorAlpha.setAlpha(this.alpha);
+    stroke(colorAlpha);
+
     strokeWeight(this.strokeWeight);
 
     this.currTime += deltaTime / this.speed;
@@ -72,7 +78,7 @@ class Quad {
     });
 
     if (this.isFadingIn) {
-      this.alpha = Math.min(this.alpha + deltaTime / 2, 255);
+      this.alpha = Math.min(this.alpha + deltaTime / 3, 255);
 
       if (this.alpha == 255) this.isFadingIn = false;
     }
