@@ -11,7 +11,8 @@ class Quad {
 
     this.currTime = 0;
     this.intervals = [];
-    this.speed = Math.random() * (1200 - 500) + 500;
+    this.speed = Math.random() * (1500 - 1000) + 1000;
+    this.strokeWeight = Math.random() + 1;
 
     this.generateIntervals();
   }
@@ -30,16 +31,15 @@ class Quad {
       lastInterval = endInterval;
     }
 
-    this.intervals.forEach((interval) => console.log(interval));
+    // this.intervals.forEach((interval) => console.log(interval));
   }
 
   drawLineFromTo(start, end) {
-    if (Math.floor(start) != Math.floor(end) && end % 1 != 0) {
+    if (Math.floor(start) != Math.floor(end) && (end % 1 != 0) & (end > start)) {
       this.drawLineFromTo(start, Math.floor(end));
       this.drawLineFromTo(Math.floor(end), end);
     }
 
-    // return;
     if (start <= 1 && end <= 1) {
       line(this.leftX + this.sizeSide * start, this.topY, this.rightX - this.sizeSide * (1 - end), this.topY);
     } else if (start >= 1 && start <= 2 && end >= 1 && end <= 2) {
@@ -55,11 +55,10 @@ class Quad {
   }
 
   draw() {
-    stroke(0);
+    stroke(13);
+    strokeWeight(this.strokeWeight);
 
     this.currTime += deltaTime / this.speed;
-
-    // console.log(this.currTime);
 
     this.intervals.forEach((interval) => {
       const start = (interval.start + this.currTime) % 4;
