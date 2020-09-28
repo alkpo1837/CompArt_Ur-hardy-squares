@@ -1,25 +1,16 @@
 import { Quad } from './quad.js';
 
-// const centers = [
-//   { x: 200, y: 200 },
-//   { x: 600, y: 200 },
-//   { x: 200, y: 600 },
-//   { x: 600, y: 600 },
-// ];
-
-const BORDERS = 192;
-const NBR_SQUARES = 10;
-
-// const centers = [{ x: 400, y: 400 }];
-
-// const sizesSide = [2, 4, 6, 8, 16, 32, 64, 128, 256];
-// const sizesSide = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 388];
-
-// const sizesSide = [100];
+const ALL_CENTERS = [
+  { x: 200, y: 200 },
+  { x: 600, y: 200 },
+  { x: 200, y: 600 },
+  { x: 600, y: 600 },
+  { x: 400, y: 400}
+];
 
 let centers = [];
 let quads = [];
-let drawIteration = NBR_SQUARES;
+let drawIteration = ALL_CENTERS.length * 4;
 let song;
 
 function preload() {
@@ -27,13 +18,16 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(800, 800);
-
   let sizesSide = [];
 
-  for (let i = 25; i < 399; i += 10) sizesSide.push(i);
-  for (let i = 0; i < NBR_SQUARES; i++)
-    centers.push({ x: Math.random() * (width - BORDERS * 2) + BORDERS, y: Math.random() * (height - BORDERS * 2) + BORDERS });
+  createCanvas(800, 800);
+
+  for (let i = 25; i < 399; i += 10) 
+    sizesSide.push(i);
+
+  for (let i = 0; i < ALL_CENTERS.length; i++)
+    centers.push({x: ALL_CENTERS[i].x + Math.random() * 200 - 100, 
+                  y: ALL_CENTERS[i].y + Math.random() * 200 - 100})
 
   sizesSide.forEach((sizeSide) => {
     centers.forEach((center) => {
@@ -41,7 +35,6 @@ function setup() {
     });
   });
 
-  song.play();
 }
 
 function draw() {
@@ -54,7 +47,8 @@ function draw() {
 
 function keyPressed() {
   if (key == 'a') {
-    drawIteration += NBR_SQUARES;
+    if (!song.isPlaying()) song.play();
+    drawIteration += ALL_CENTERS.length;
   }
 }
 
